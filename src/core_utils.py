@@ -1,5 +1,5 @@
 """
-Core Utilities - Day 04
+Core Utilities - Day 05
 Enhanced utility functions with better error handling
 """
 
@@ -74,6 +74,11 @@ class Config:
     # Download settings
     MAX_FILE_SIZE = 500  # MB
     CHUNK_SIZE = 8192
+    
+    # Language settings
+    DEFAULT_SOURCE_LANGUAGE = "en"
+    DEFAULT_TARGET_LANGUAGE = "es"
+    DEFAULT_VOICE = "female"
 
 class YouTubeError(Exception):
     """Custom exception for YouTube-related errors"""
@@ -85,4 +90,12 @@ class AudioError(Exception):
 
 class MediaError(Exception):
     """Custom exception for media processing errors"""
+    pass
+
+class TranslationError(Exception):
+    """Custom exception for translation errors"""
+    pass
+
+class TTSError(Exception):
+    """Custom exception for TTS errors"""
     pass

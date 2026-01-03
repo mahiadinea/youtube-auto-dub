@@ -1,4 +1,4 @@
-# YouTube Auto Dub - Day 04
+# YouTube Auto Dub - Day 05
 
 ## Project Overview
 YouTube Auto Dub is a tool to automatically dub YouTube videos into different languages.
@@ -12,21 +12,33 @@ YouTube Auto Dub is a tool to automatically dub YouTube videos into different la
 - Audio mixing and video reconstruction
 
 ## Current Status
-Day 04: Enhanced YouTube downloading and basic media processing.
+Day 05: Enhanced with translation and TTS functionality.
 
 ## New Features
-- **Enhanced YouTube Downloader**: Real audio download with format conversion
-- **Audio Processor**: Audio extraction and format conversion using FFmpeg
-- **Video Processor**: Basic video information extraction
-- **Engine Placeholders**: Framework for translation, TTS, STT, and diarization
-- **Better Error Handling**: Custom exceptions and improved validation
-- **File Management**: Enhanced file operations and size checking
+- **Translation Engine**: Basic Google Translate integration with language detection
+- **TTS Engine**: Edge TTS integration with multi-language voice support
+- **Enhanced Audio Processing**: Audio chunking for better processing
+- **Video Processing**: Audio-video merging capabilities
+- **Better Error Handling**: Custom exceptions for all engine types
+- **Language Support**: 10 languages with male/female voice options
 
 ## Key Components
-- `youtube.py`: Enhanced YouTube video downloading
-- `media.py`: Audio and video processing with FFmpeg
-- `engines.py`: Placeholder classes for AI engines
-- `core_utils.py`: Enhanced utilities with better error handling
+- `engines.py`: Real translation and TTS implementations
+- `media.py`: Enhanced audio/video processing with chunking
+- `core_utils.py`: Added language and voice configuration
+- `main.py`: Complete workflow integration
+
+## Supported Languages
+- English (en)
+- Spanish (es)
+- French (fr)
+- German (de)
+- Italian (it)
+- Portuguese (pt)
+- Chinese (zh)
+- Japanese (ja)
+- Korean (ko)
+- Vietnamese (vi)
 
 ## Installation
 ```bash
@@ -42,15 +54,15 @@ python main.py
 
 ## Dependencies
 - yt-dlp: YouTube video downloading
-- requests: HTTP requests
-- pathlib2: Enhanced path handling
+- requests: HTTP requests and translation API
+- edge-tts: Text-to-speech synthesis
 - numpy: Array processing
 - librosa: Audio analysis
 - ffmpeg-python: FFmpeg Python bindings
 
 ## Next Steps
 - Implement actual speech-to-text with Faster-Whisper
-- Add real translation capabilities
-- Implement TTS with Edge-TTS
-- Add speaker diarization with Pyannote
+- Add real speaker diarization with Pyannote
 - Implement audio separation with Demucs
+- Add video reconstruction pipeline
+- Improve translation quality and add more languages

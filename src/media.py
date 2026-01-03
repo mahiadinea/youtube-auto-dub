@@ -1,5 +1,5 @@
 """
-Media Processing Module - Day 04
+Media Processing Module - Day 05
 Basic audio and video processing functionality
 """
 
@@ -90,6 +90,33 @@ class AudioProcessor:
         except Exception as e:
             print(f"Error getting audio info: {e}")
             return None
+    
+    def split_audio(self, audio_file, chunk_duration=30):
+        """Split audio into chunks"""
+        try:
+            output_pattern = os.path.join(Config.TEMP_DIR, "chunk_%04d.wav")
+            
+            cmd = [
+                'ffmpeg', '-i', audio_file,
+                '-f', 'segment',
+                '-segment_time', str(chunk_duration),
+                '-acodec', 'copy',
+                '-y', output_pattern
+            ]
+            
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            
+            if result.returncode == 0:
+                # Return list of chunk files
+                chunks = list(Path(Config.TEMP_DIR).glob("chunk_*.wav"))
+                return [str(chunk) for chunk in sorted(chunks)]
+            else:
+                print(f"Error splitting audio: {result.stderr}")
+                return []
+                
+        except Exception as e:
+            print(f"Error splitting audio: {e}")
+            return []
 
 class VideoProcessor:
     """Basic video processing functionality"""
@@ -164,3 +191,24 @@ class VideoProcessor:
         except Exception as e:
             print(f"Error extracting frames: {e}")
             return False
+    
+    def merge_audio_video(self, video_file, audio_file, output_file):
+        """Merge audio with video"""
+        try:
+            cmd = [
+                'ffmpeg', '-i', video_file, '-i', audio_file,
+                '-c:v', 'copy', '-c:a', 'aac',
+                '-y', output_file
+            ]
+            
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            
+            if result.returncode == 0 and Path(output_file).exists():
+                return output_file
+            else:
+                print(f"Error merging audio and video: {result.stderr}")
+                return None
+                
+        except Exception as e:
+            print(f"Error merging audio and video: {e}")
+            return None

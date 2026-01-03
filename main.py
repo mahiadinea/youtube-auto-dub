@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-YouTube Auto Dub - Day 04
-Enhanced YouTube downloading and media processing
+YouTube Auto Dub - Day 05
+Enhanced with translation and TTS functionality
 """
 
 import sys
@@ -15,6 +15,7 @@ try:
     from core_utils import setup_directories, validate_url, get_video_id, Config
     from youtube import YouTubeDownloader
     from media import AudioProcessor, VideoProcessor
+    from engines import TranslationEngine, TTSEngine, STTEngine, DiarizationEngine
 except ImportError as e:
     print(f"Error: {e}")
     sys.exit(1)
@@ -55,16 +56,30 @@ def main():
         # Process audio
         audio_processor = AudioProcessor()
         processed_audio = audio_processor.extract_audio(audio_file)
-        print(f"Audio processed: {processed_audio}")
+        if processed_audio:
+            print(f"Audio processed: {processed_audio}")
+            
+            # Transcribe audio
+            stt_engine = STTEngine()
+            transcription = stt_engine.transcribe(processed_audio, language='en')
+            print(f"Transcription: {transcription}")
+            
+            # Translate text
+            translator = TranslationEngine()
+            translated_text = translator.translate(transcription, 'es')
+            print(f"Translation: {translated_text}")
+            
+            # Synthesize speech
+            tts_engine = TTSEngine()
+            tts_audio = tts_engine.synthesize(translated_text, 'es', voice='female')
+            print(f"TTS audio: {tts_audio}")
+        else:
+            print("Failed to process audio!")
     else:
         print("Failed to download audio!")
         return
     
-    # TODO: Implement speech-to-text
-    # TODO: Implement text translation
-    # TODO: Implement voice synthesis
     # TODO: Implement video reconstruction
-    
     print("YouTube Auto Dub - Finished!")
 
 if __name__ == "__main__":
