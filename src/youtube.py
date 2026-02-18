@@ -217,11 +217,7 @@ def download_video(url: str,
         opts = _get_opts(browser=browser, cookies_file=cookies_file)
         opts.update({
             # Format selection: Best MP4 with AVC video and AAC audio
-            'format': (
-                'bestvideo[ext=mp4][vcodec^=avc]+bestaudio[ext=m4a]/'  # Preferred
-                'best[ext=mp4]/'                                      # Fallback MP4
-                'best'                                               # Final fallback
-            ),
+            'format': 'bestvideo[height<=360]+bestaudio/best[height<=360]',
             'outtmpl': str(out_path),
             'merge_output_format': 'mp4',
             'postprocessors': [],  # No post-processing for raw video
